@@ -61,8 +61,7 @@ class Cliente(QObject):
                             "data" : msg["data"]    }
             self.update_lobby_chat.emit(chat_entry)
         elif msg["type"] == "display_update":
-            if msg["place"] == "sign_in":
-                self.user = msg["username"]
+            self.user = msg["username"]
             display_entry = {   "place" : msg["place"], \
                                 "info" : msg["info"]    }
             self.update_mm_display.emit(display_entry)
