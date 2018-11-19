@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QApplication
 class Cliente(QObject):
 
     update_lobby_chat = pyqtSignal(dict)
+    update_lobby_player_list = pyqtSignal(dict)
     update_mm_display = pyqtSignal(dict)
 
     def __init__(self, port, host):
@@ -65,12 +66,15 @@ class Cliente(QObject):
             display_entry = {   "place" : msg["place"], \
                                 "info" : msg["info"]    }
             self.update_mm_display.emit(display_entry)
-
+        elif msg["type"] == "users_update":
+            self.update_lobby_player_list.emit(msg["info"])
 
     def close_mm(self, event):
         if event is True:
             self.lobby = Lobby(self)
             self.update_lobby_chat.connect(self.lobby.update_chatbox)
+            self.update_lobby_player_list.connect(self.lobby.update_playerlist)
+
 
 
 if __name__ == '__main__':

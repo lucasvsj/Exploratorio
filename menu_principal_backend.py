@@ -10,9 +10,7 @@ from encriptacion import encriptar, desencriptar
 
 
 ventana_principal, QtClass = uic.loadUiType('qtd_menu_principal.ui')
-# db = {  'lucasvsj' : encriptar('qwerty'), \
-#         'michael' : encriptar('michael123'), \
-#         'trevor' : encriptar('trevor123')}
+
 
 class VentanaInicio(ventana_principal, QtClass):
 
@@ -103,8 +101,9 @@ class VentanaInicio(ventana_principal, QtClass):
             self.ErrorDisplayerSignIn.setText(msg["info"])
         elif msg["place"] == "log_in":
             self.ErrorDisplayerLogIn.setText(msg["info"])
-            self.close_window.emit(True)
-            self.hide()
+            if "Bienvenido" in msg["info"]:
+                self.close_window.emit(True)
+                self.hide()
             # widgets.qApp.quit()
 
 
