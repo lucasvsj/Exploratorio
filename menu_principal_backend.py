@@ -27,6 +27,8 @@ class VentanaInicio(ventana_principal, QtClass):
         self.send_info.connect(self.cliente.send)
         self.close_window.connect(self.cliente.close_mm)
         self.WindowSwitcher.setCurrentIndex(0)
+        self.soundtrack = QSound('black_core.wav')
+        self.soundtrack.play()
         self.show()
 
 
@@ -104,9 +106,21 @@ class VentanaInicio(ventana_principal, QtClass):
             if "Bienvenido" in msg["info"]:
                 self.close_window.emit(True)
                 self.hide()
+                self.soundtrack.stop()
             # widgets.qApp.quit()
 
 
+    def keyPressEvent(self, event):
+        if event.key() == core.Qt.Key_Return:
+            if self.WindowSwitcher.currentIndex() == 1:
+                if  self.InputUsuarioLogIn.text() != '' and \
+                    self.InputClaveLogIn.text() != '':
+                        self.log_in_checker()
+            elif self.WindowSwitcher.currentIndex() == 2:
+                if  self.InputUsuarioSignIn.text() != '' and \
+                    self.InputClaveSignIn.text() != '' and \
+                    self.InputConfirmarClaveSignIn.text() != '':
+                        self.sign_in_checker()
 
 
     def mouseMoveEvent(self, event):
